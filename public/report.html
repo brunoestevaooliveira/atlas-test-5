@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>Reportar Ocorrência</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/tailwind.css" rel="stylesheet">
+  </head>
+  <body class="bg-gray-100">
+    <header class="bg-blue-600 text-white p-4 fixed w-full top-0 shadow-md">
+      <nav class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">Atlas Cívico</h1>
+        <ul class="flex space-x-4">
+          <li><a href="/index.html" class="hover:underline">Início</a></li>
+          <li><a href="/report.html" class="hover:underline">Reportar</a></li>
+          <li><a href="/acompanhar.html" class="hover:underline">Acompanhar</a></li>
+          <li><a href="/buscar.html" class="hover:underline">Buscar</a></li>
+          <li><a href="/login.html" class="hover:underline">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="pt-20 container mx-auto">
+      <h2 class="text-2xl font-bold mb-4">Reportar Ocorrência</h2>
+      <form class="bg-white p-6 rounded shadow-md" id="form" enctype="multipart/form-data">
+        <label class="block mb-2">Título</label>
+        <input name="title" class="w-full p-2 border rounded mb-4" placeholder="Título da ocorrência" required />
+
+        <label class="block mb-2">Descrição</label>
+        <textarea name="description" class="w-full p-2 border rounded mb-4" placeholder="Descrição detalhada" required></textarea>
+
+        <label class="block mb-2">Categoria</label>
+        <select name="category_id" class="w-full p-2 border rounded mb-4" required>
+          <option value="1">Categoria 1</option>
+          <option value="2">Categoria 2</option>
+        </select>
+
+        <label class="block mb-2">Foto</label>
+        <input type="file" name="photos" class="w-full p-2 border rounded mb-4" multiple accept="image/*" />
+
+        <label class="block mb-2">Endereço</label>
+        <div id="map" class="h-64 w-full mb-4"></div>
+
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Enviar</button>
+      </form>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/js/map.js"></script>
+    <script>
+      document.getElementById('form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+
+        // Validação no front-end
+        const title = formData.get('title');
+        const description = formData.get('description');
+        const category_id = formData.get('category_id');
+        const lat = formData.get('lat');
+        const lng = formData.get('lng');
+
+        if (!title || !description || !category_id || !lat || !lng) {
+          alert('Todos os campos obrigatórios devem ser preenchidos.');
+          return;
+        }
+
+        try {
+          const res = await fetch('/api/issues', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!res.ok) {
+            const error = await res.json();
+            alert(error.error || 'Erro ao enviar a ocorrência.');
+            return;
+          }
+
+          alert('Ocorrência enviada com sucesso!');
+          e.target.reset();
+        } catch (error) {
+          console.error(error);
+          alert('Erro ao enviar a ocorrência.');
+        }
+      });
+    </script>
+  </body>
+</html>

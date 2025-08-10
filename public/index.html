@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>Atlas Cívico - Início</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet/dist/leaflet.css"
+    />
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <style>
+      #map {
+        height: 80vh;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <header class="bg-blue-600 text-white p-4 fixed w-full top-0 shadow-md">
+      <nav class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">Atlas Cívico</h1>
+        <ul class="flex space-x-4">
+          <li><a href="/index.html" class="hover:underline">Início</a></li>
+          <li><a href="/report.html" class="hover:underline">Reportar</a></li>
+          <li><a href="/acompanhar.html" class="hover:underline">Acompanhar</a></li>
+          <li><a href="/buscar.html" class="hover:underline">Buscar</a></li>
+          <li><a href="/login.html" class="hover:underline">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="pt-20 container mx-auto">
+      <div id="map" class="h-screen w-full"></div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/js/map.js"></script>
+  </body>
+</html>
