@@ -2,37 +2,61 @@
 <html lang="pt-br">
   <head>
     <meta charset="utf-8" />
-    <title>Atlas Cívico - Início</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet/dist/leaflet.css"
-    />
-    <link href="/css/tailwind.css" rel="stylesheet">
+    <title>Atlas Cívico</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="/css/tailwind.css" />
     <style>
       #map {
-        height: 80vh;
+        height: calc(100vh - 4rem);
       }
     </style>
   </head>
-  <body class="bg-gray-100">
-    <header class="bg-blue-600 text-white p-4 fixed w-full top-0 shadow-md">
-      <nav class="container mx-auto flex justify-between items-center">
-        <h1 class="text-xl font-bold">Atlas Cívico</h1>
-        <ul class="flex space-x-4">
-          <li><a href="/index.html" class="hover:underline">Início</a></li>
-          <li><a href="/report.html" class="hover:underline">Reportar</a></li>
-          <li><a href="/acompanhar.html" class="hover:underline">Acompanhar</a></li>
-          <li><a href="/buscar.html" class="hover:underline">Buscar</a></li>
-          <li><a href="/login.html" class="hover:underline">Login</a></li>
-        </ul>
+  <body class="bg-gray-50">
+    <header class="bg-white shadow">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+        <div class="flex items-center space-x-8">
+          <a href="/" class="font-bold text-xl text-orange-600">Atlas Cívico</a>
+          <div class="hidden sm:flex space-x-4">
+            <a href="/" class="text-orange-600 font-medium border-b-2 border-orange-600">Início</a>
+            <a href="/report.html" class="text-gray-600 hover:text-orange-600">Reportar</a>
+            <a href="/acompanhar.html" class="text-gray-600 hover:text-orange-600">Acompanhar</a>
+            <a href="/buscar.html" class="text-gray-600 hover:text-orange-600">Buscar</a>
+          </div>
+        </div>
+        <div>
+          <a href="/login.html" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition">Login</a>
+        </div>
       </nav>
     </header>
 
-    <main class="pt-20 container mx-auto">
-      <div id="map" class="h-screen w-full"></div>
+    <main class="relative">
+      <div id="searchPanel" class="absolute top-24 left-4 z-10 w-80 p-4 bg-white shadow-lg rounded-lg space-y-4">
+        <div>
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Buscar por ocorrência..."
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-orange-200"
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium text-gray-700">Mostrar Ocorrências</span>
+          <input id="toggleIssues" type="checkbox" class="h-4 w-4 border rounded" checked />
+        </div>
+      </div>
+      <div
+        id="issuePanel"
+        class="absolute top-24 right-4 z-10 w-96 p-4 bg-white shadow-lg rounded-lg overflow-y-auto max-h-[70vh]"
+      >
+        <h2 class="text-lg font-semibold mb-2">Ocorrências Recentes</h2>
+        <p class="text-gray-600 mb-4">Veja os problemas reportados pela comunidade.</p>
+        <div id="issuesList" class="space-y-2"></div>
+      </div>
+      <div id="map"></div>
     </main>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="/js/map.js"></script>
   </body>
 </html>
